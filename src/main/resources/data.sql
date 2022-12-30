@@ -1,0 +1,1 @@
+INSERT INTO `files` VALUES (1,'前年孤独','storage/test.zip','zip','王二麻子','诡辩奇才','反方材料')

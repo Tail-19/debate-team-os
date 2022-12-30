@@ -6,11 +6,11 @@ import lombok.Data;
 
 @Data
 public class StoredFile {
+    @TableId(type = IdType.AUTO)
+    public Long id;
     public String name;
     public String path;
     public String fileType;
-    @TableId(type = IdType.AUTO)
-    public Long id;
     public String uploader;
     public String uploaderTitle;
     public String tag;
