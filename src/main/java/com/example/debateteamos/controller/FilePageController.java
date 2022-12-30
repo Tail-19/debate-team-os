@@ -8,10 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.*;
@@ -33,6 +31,9 @@ public class FilePageController {
 
     @GetMapping("/api/del")
     public String delFile(@RequestParam int id) {
+        StoredFile fd = fileMapper.selectById(id);
+        File file = new File(fd.path);
+        file.delete();
         fileMapper.deleteById(id);
         return "redirect:/file";
     }
@@ -77,5 +78,14 @@ public class FilePageController {
             ex.printStackTrace();
         }
         return "redirect:/file";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam String content, ModelMap model) {
+        List<StoredFile> fs = fileMapper.selectByStr(content);
+        System.out.println(fs.size());
+
+        model.addAttribute("files",fs);
+        return "fileList";
     }
 }

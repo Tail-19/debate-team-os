@@ -23,4 +23,7 @@ public interface FileMapper extends BaseMapper<StoredFile> {
 
     @Update("update files set tag = #{tag} where id = #{id}")
     int updateTagById(int id, String newTag);
+
+    @Select("select * from files where name like '%${str}%'")
+    List<StoredFile> selectByStr(String str);
 }

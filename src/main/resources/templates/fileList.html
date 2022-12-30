@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@2.46.0/dist/full.css" rel="stylesheet" type="text/css" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link th:href="@{/daisyui.css}" rel="stylesheet" type="text/css" />
+  <script th:src="@{/tailwind.js}"></script>
   <html data-theme="lemonade">
 
   </html>
@@ -25,12 +25,14 @@
               </svg>
             </button>
           </div>
-          <form enctype="multipart/form-data" action="/file/api/upload" target="hidden_frame" method="POST" required="required">
+          <form enctype="multipart/form-data" action="/file/api/upload" target="hidden_frame" method="POST"
+            required="required">
             <div class="flex flex-col w-full">
               <div class="form-control">
                 <label class="input-group input-group-vertical">
                   <span>文件名</span>
-                  <input type="text" placeholder="在列表页显示的文件名" class="input input-bordered" id="up-name" name="filename" />
+                  <input type="text" placeholder="在列表页显示的文件名" class="input input-bordered" id="up-name"
+                    name="filename" />
                 </label>
               </div>
               <br>
@@ -48,7 +50,7 @@
             </div>
             <br>
             <input class="btn btn-accent" value="上传" type="submit">
-            <input type="reset" name="reset" style="display: none;" />
+            <input type="reset" name="reset" style="display: none" />
           </form>
           <iframe name='hidden_frame' id="hidden_frame" style='display: none'></iframe>
         </div>
@@ -61,7 +63,9 @@
     <div class="navbar-start">
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost btn-circle">
-          <img src="/static/upload.png">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+          </svg>
         </label>
         <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
           <li><a>首页</a></li>
@@ -74,15 +78,10 @@
       <a class="btn btn-ghost normal-case text-xl">资料管理</a>
     </div>
     <div class="navbar-end">
-      <button class="btn btn-ghost btn-circle" onclick="popWin()">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-      </button>
+      <button class="btn btn-info" onclick="popWin()">上传</button>
       <div class="form-control">
         <div class="input-group">
-          <input type="text" placeholder="Search…" class="input input-bordered" />
+          <input type="text" placeholder="Search…" class="input input-bordered" id="searchBar" name="searchBar" />
           <button class="btn btn-accent" id="searchBox" onclick="handleSearch()">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
               stroke="currentColor">
@@ -117,7 +116,7 @@
               <div class="flex items-center space-x-3">
                 <div class="avatar">
                   <div class="mask mask-squircle w-12 h-12">
-                    <img th:src="@{/static/img.png}" alt="图片" />
+                    <img th:src="@{/img.png}" alt="图片" />
                   </div>
                 </div>
               </div>
@@ -138,8 +137,6 @@
               <span class="badge badge-accent badge-sm" th:text="${file.tag}">反方材料</span>
             </td>
             <th>
-              <a type="button" class="btn  btn-xs btn-success" href="./file/api/edit?id=1"
-                th:href="@{./file/api/edit(id=${file.id})}">编辑</a>
               <a type="button" class="btn  btn-xs btn-info" href="./file/api/down?id=1"
                 th:href="@{./file/api/down(id=${file.id})}">下载</a>
               <a type="button" class="btn  btn-xs btn-error" href="./file/api/del?id=1"
@@ -168,7 +165,6 @@
 <script>
   function popWin() {
     var win = document.getElementById("popBox")
-    //$("input[type=reset]").trigger("click");
     win.style.display = "block"
   }
 
@@ -178,7 +174,17 @@
   }
 
   function handleSearch() {
+    var text = document.getElementById("searchBar").value;
+    var ajax = new XMLHttpRequest();
+    var fd = new FormData();
 
+    if(text == null) {
+      return;
+    }
+    fd.append("content", text);
+    ajax.open("get", "/file/search", true);
+    ajax.send(fd);
+    location.href = "/file/search?content=" + text;
   }
 
   function upload() {
@@ -207,17 +213,17 @@
     }
   }
 
-  $('#hidden_frame').load(function(){
-    var text=$(this).contents().find("body").text();
-       // 根据后台返回值处理结果
-    if(text=="ok") {
-        alert("ok");
+  $('#hidden_frame').load(function () {
+    var text = $(this).contents().find("body").text();
+    // 根据后台返回值处理结果
+    if (text == "ok") {
+      alert("ok");
     } else {
-        alert("Not ok?");
-        //location.href='BookResourceList.jsp'
+      alert("Not ok?");
+      //location.href='BookResourceList.jsp'
     }
     closeWin();
-});
+  });
 
 </script>
 
