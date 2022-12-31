@@ -43,6 +43,7 @@ public class FilePageController {
         return "redirect:/file";
     }
 
+    // 代码量不大 不做业务分离了
     @GetMapping("/api/down")
     public String download(HttpServletResponse response, @RequestParam int id) {
         try {

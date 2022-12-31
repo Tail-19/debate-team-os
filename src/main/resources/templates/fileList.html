@@ -174,16 +174,6 @@
   }
 
   function handleSearch() {
-    var text = document.getElementById("searchBar").value;
-    var ajax = new XMLHttpRequest();
-    var fd = new FormData();
-
-    if(text == null) {
-      return;
-    }
-    fd.append("content", text);
-    ajax.open("get", "/file/search", true);
-    ajax.send(fd);
     location.href = "/file?content=" + text;
   }
 
