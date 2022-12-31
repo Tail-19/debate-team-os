@@ -184,7 +184,7 @@
     fd.append("content", text);
     ajax.open("get", "/file/search", true);
     ajax.send(fd);
-    location.href = "/file/search?content=" + text;
+    location.href = "/file?content=" + text;
   }
 
   function upload() {

@@ -23,8 +23,13 @@ public class FilePageController {
     FileMapper fileMapper;
 
     @GetMapping
-    public String index(Model model) {
-        List<StoredFile> f = fileMapper.selectAll();
+    public String index(Model model,@RequestParam(required = false) String content) {
+        List<StoredFile> f;
+        if(content == null) {
+            f = fileMapper.selectAll();
+        } else {
+            f = fileMapper.selectByStr(content);
+        }
         model.addAttribute("files", f);
         return "fileList";
     }
