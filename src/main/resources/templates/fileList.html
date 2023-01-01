@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link th:href="@{/daisyui.css}" rel="stylesheet" type="text/css" />
+  <script th:src="@{/tailwind.js}"></script>
+  <html data-theme="lemonade">
+
+  </html>
+  <meta charset="UTF-8">
+  <title>List</title>
+</head>
+
+<body>
+  <!-- 弹出窗口 上传 -->
+  <div class="popBox" id="popBox">
+    <div class="popContent">
+      <div class="flex flex-col w-full shadow-xl rounded-box">
+        <div class="card-body">
+          <div class="card-actions justify-end">
+            <button class="btn btn-square btn-sm" onclick="closeWin()">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <form enctype="multipart/form-data" action="/file/api/upload" target="hidden_frame" method="POST"
+            required="required">
+            <div class="flex flex-col w-full">
+              <div class="form-control">
+                <label class="input-group input-group-vertical">
+                  <span>文件名</span>
+                  <input type="text" placeholder="在列表页显示的文件名" class="input input-bordered" id="up-name"
+                    name="filename" />
+                </label>
+              </div>
+              <br>
+              <select class="select select-primary w-full max-w-xs" id="up-tag" name="select">
+                <option disabled selected>选择Tag</option>
+                <option value="正方材料">正方材料</option>
+                <option value="反方材料">反方材料</option>
+                <option value="正反方共用">正反方共用</option>
+              </select>
+              <br>
+              <input type="file" class="file-input file-input-sm file-input-bordered file-input-info w-full max-w-xs"
+                multiple="multiple" id="up-file" name="file" />
+              <br>
+              <progress class="progress w-full" value="0" max="100"></progress>
+            </div>
+            <br>
+            <input class="btn btn-accent" value="上传" type="submit">
+            <input type="reset" name="reset" style="display: none" />
+          </form>
+          <iframe name='hidden_frame' id="hidden_frame" style='display: none'></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 顶栏 -->
+  <div class="navbar bg-base-100">
+    <div class="navbar-start">
+      <div class="dropdown">
+        <label tabindex="0" class="btn btn-ghost btn-circle">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+          </svg>
+        </label>
+        <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a>首页</a></li>
+          <li class="bordered"><a>文件管理</a></li>
+          <li><a>比赛进度</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="navbar-center">
+      <a class="btn btn-ghost normal-case text-xl">资料管理</a>
+    </div>
+    <div class="navbar-end">
+      <button class="btn btn-info" onclick="popWin()">上传</button>
+      <div class="form-control">
+        <div class="input-group">
+          <input type="text" placeholder="Search…" class="input input-bordered" id="searchBar" name="searchBar" />
+          <button class="btn btn-accent" id="searchBox" onclick="handleSearch()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 列表 -->
+  <div class="card bg-base-80 shadow-xl">
+    <div class="overflow-x-auto w-full">
+      <table class="table w-full">
+        <!-- head -->
+        <thead>
+          <tr>
+            <th></th>
+            <th>文件名</th>
+            <th>上传者</th>
+            <th>Tags</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- row 1 -->
+          <tr th:each="file:${files}">
+            <td>
+              <div class="flex items-center space-x-3">
+                <div class="avatar">
+                  <div class="mask mask-squircle w-12 h-12">
+                    <img th:src="@{/img.png}" alt="图片" />
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div>
+                <div class="font-bold" th:text="${file.name}">一个资料名称</div>
+                <div class="text-sm opacity-50" th:text="${file.fileType}">ZIP</div>
+              </div>
+            </td>
+
+            <td th:text="${file.uploader}">
+              一个辩手
+              <br />
+              <span class="badge badge-ghost badge-sm" th:text="${file.uploaderTitle}">黄金大辩</span>
+            </td>
+            <td>
+              <span class="badge badge-accent badge-sm" th:text="${file.tag}">反方材料</span>
+            </td>
+            <th>
+              <a type="button" class="btn  btn-xs btn-info" href="./file/api/down?id=1"
+                th:href="@{./file/api/down(id=${file.id})}">下载</a>
+              <a type="button" class="btn  btn-xs btn-error" href="./file/api/del?id=1"
+                th:href="@{./file/api/del(id=${file.id})}">删除</a>
+            </th>
+          </tr>
+        </tbody>
+        <!-- foot -->
+        <tfoot>
+          <tr>
+            <th></th>
+            <th>文件名</th>
+            <th>上传者</th>
+            <th>Tags</th>
+            <th>操作</th>
+          </tr>
+        </tfoot>
+
+      </table>
+    </div>
+  </div>
+
+
+</body>
+
+<script>
+  function popWin() {
+    var win = document.getElementById("popBox")
+    win.style.display = "block"
+  }
+
+  function closeWin() {
+    var win = document.getElementById("popBox")
+    win.style.display = "none"
+  }
+
+  function handleSearch() {
+    location.href = "/file?content=" + text;
+  }
+
+  function upload() {
+    /* FormData 是表单数据类 */
+    var fd = new FormData(); //创建一个表单对象
+    var ajax = new XMLHttpRequest();
+    fd.append("upload", 1); //将数据append 到表单对象中
+    /* 把文件添加到表单里 */
+    fd.append("upfile", document.getElementById("up-file").files[0]);
+
+    ajax.open("post", "/messagefile", true); //提交方式 接口地址 同步异步？
+    ajax.setRequestHeader("token", "11111"); // 设置 请求头
+    ajax.onload = function () {
+      console.log("准备完毕");
+      console.log(ajax.responseText);
+      console.log(fd);
+    };
+
+    ajax.send(fd); //发送 ajax请求 上传文件
+
+    ajax.onreadystatechange = function () {
+      if (ajax.readyState == 4 && ajax.status == 200) {
+        //步骤五 如果能够进到这个判断 说明 数据 完美的回来了,并且请求的页面是存在的
+        console.log(ajax.responseText);//输入相应的内容
+      }
+    }
+  }
+
+  $('#hidden_frame').load(function () {
+    var text = $(this).contents().find("body").text();
+    // 根据后台返回值处理结果
+    if (text == "ok") {
+      alert("ok");
+    } else {
+      alert("Not ok?");
+      //location.href='BookResourceList.jsp'
+    }
+    closeWin();
+  });
+
+</script>
+
+<style>
+  .popBox {
+    display: none;
+    /* 默认隐藏 */
+    position: absolute;
+    /* 根据浏览器定位 */
+    z-index: 1;
+    /* 放在顶部 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* 全宽 */
+    height: 100%;
+    /* 全高 */
+    overflow: auto;
+    /* 允许滚动 */
+  }
+
+  .popContent {
+    display: flex;
+    /*采用flexbox布局*/
+    flex-direction: column;
+    /*垂直排列*/
+    position: relative;
+    background-color: #ffffff;
+    margin: 15% auto;
+    /*距顶部15% 水平居中*/
+    padding: 20px;
+
+    width: 40%;
+    animation: topDown 0.4s;
+
+
+  }
+
+  @keyframes topDown {
+    from {
+      top: -300px;
+      opacity: 0
+    }
+
+    to {
+      top: 0;
+      opacity: 1
+    }
+  }
+
+</style>
+
+</html>
