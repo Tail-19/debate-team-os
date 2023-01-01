@@ -2,7 +2,8 @@ package com.example.debateteamos.controller;
 
 import com.example.debateteamos.mapper.FileMapper;
 import com.example.debateteamos.model.StoredFile;
-import com.example.debateteamos.service.IFileService;
+
+import com.example.debateteamos.service.LoginService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/file/api")
 public class FileController {
+
+    @Autowired
+    LoginService loginService;
     @Resource
     FileMapper fileMapper;
 

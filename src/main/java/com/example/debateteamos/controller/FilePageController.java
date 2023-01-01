@@ -1,8 +1,9 @@
 package com.example.debateteamos.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.debateteamos.mapper.FileMapper;
 import com.example.debateteamos.model.StoredFile;
-import com.example.debateteamos.service.IFileService;
+
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/file")
 public class FilePageController {
-    @Resource
+    @Resource()
     FileMapper fileMapper;
 
     @GetMapping
