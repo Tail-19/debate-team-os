@@ -17,4 +17,5 @@ public class UserInfo {
     private String password;
     private String phone;
     private String email;
+    private String token;
 }

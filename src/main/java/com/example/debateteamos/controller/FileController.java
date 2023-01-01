@@ -1,5 +1,7 @@
 package com.example.debateteamos.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.debateteamos.entity.UserInfo;
 import com.example.debateteamos.mapper.FileMapper;
 import com.example.debateteamos.model.StoredFile;
 
@@ -66,16 +68,22 @@ public class FileController {
             throw e;
         }
 
+        QueryWrapper<UserInfo> userWrapper = new QueryWrapper();
+        UserInfo rightUser = loginService.getOne(userWrapper.eq("token", cookie));
         // 数据库操作
         StoredFile storedFile = new StoredFile();
         storedFile.name = filename;
         storedFile.fileType = oldName.substring(oldName.lastIndexOf("."));
-
-        // TODO: 使用cookie确认上传者信息
-        storedFile.uploader = "None";
-        storedFile.uploaderTitle = "None";
         storedFile.path = uploadPath + format + newName;
         storedFile.tag = select;
+
+        if(rightUser == null || cookie.equals('0')) {
+            storedFile.uploader = "None";
+            storedFile.uploaderTitle = "None";
+        } else {
+            storedFile.uploader = rightUser.getUsername();
+            storedFile.uploaderTitle = rightUser.getEmail();
+        }
 
         fileMapper.insert(storedFile);
         System.out.println("Stored file at " + storedFile.path);
