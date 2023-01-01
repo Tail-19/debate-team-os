@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @TableName("userTable")
 public class UserInfo {
@@ -18,4 +20,5 @@ public class UserInfo {
     private String phone;
     private String email;
     private String token;
+    private List<Message> msgs;
 }

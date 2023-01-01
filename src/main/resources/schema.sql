@@ -25,3 +25,14 @@ CREATE TABLE `usertable`
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+DROP TABLE IF EXISTS `messages`;
+CREATE TABLE `messages`
+(
+    `id`      BIGINT(20) UNSIGNED AUTO_INCREMENT,
+    `from`    varchar(32) DEFAULT NULL,
+    `to`      varchar(32) DEFAULT NULL,
+    `message` varchar(128),
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
