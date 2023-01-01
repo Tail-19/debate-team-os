@@ -32,7 +32,7 @@ CREATE TABLE `messages`
     `id`      BIGINT(20) UNSIGNED AUTO_INCREMENT,
     `from`    varchar(32) DEFAULT NULL,
     `to`      varchar(32) DEFAULT NULL,
-    `message` varchar(128),
+    `message` varchar(128) DEFAULT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;

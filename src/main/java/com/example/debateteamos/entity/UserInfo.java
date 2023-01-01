@@ -20,5 +20,4 @@ public class UserInfo {
     private String phone;
     private String email;
     private String token;
-    private List<Message> msgs;
 }

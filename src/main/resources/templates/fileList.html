@@ -78,6 +78,7 @@
       <a class="btn btn-ghost normal-case text-xl">资料管理</a>
     </div>
     <div class="navbar-end">
+      <button class="btn btn-success" onclick="sendMsg()">站内信测试</button>
       <button class="btn btn-info" onclick="popWin()">上传</button>
       <div class="form-control">
         <div class="input-group">
@@ -163,6 +164,25 @@
 </body>
 
 <script>
+  // 站内信接收
+  const BaseUrl = "localhost:8080"
+  fetch(BaseUrl + "/msg/get").then(
+    response => {
+      if(response != null) {
+        console.log(response.body)
+      }
+    }
+  )
+
+  function sendMsg() {
+      var ajax = new XMLHttpRequest();
+      var fd = new FormData();
+      ajax.open("get","/msg/send",true);
+      fd.append("content","测试消息")
+      fd.append("sendTo","yyk");
+      ajax.send(fd);
+  }
+
   function popWin() {
     var win = document.getElementById("popBox")
     win.style.display = "block"

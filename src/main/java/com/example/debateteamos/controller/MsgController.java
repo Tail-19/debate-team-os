@@ -48,14 +48,14 @@ public class MsgController {
     public ModelAndView get(@CookieValue(value = "token", required = true) String token) {
 
         ModelAndView mv = new ModelAndView();
-        List<UserInfo> users = loginMapper.fillMailBox(token);
+        /*List<UserInfo> users = loginMapper.fillMailBox(token);*/
 
         // 构建返回值
-        for(UserInfo u : users ) {
+        /*for(UserInfo u : users ) {
             for(Message m : u.getMsgs()) {
                 mv.addObject("msg"+m.getId(),m.getMessage());
             }
-        }
+        }*/
 
         return mv;
     }

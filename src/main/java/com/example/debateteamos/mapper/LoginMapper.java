@@ -7,12 +7,12 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 public interface LoginMapper extends BaseMapper<UserInfo> {
-    @Select("select * from usertable where token = #{token}")
+   /* @Select("select * from usertable where token = #{token}")
     @Results({
             @Result(id = true,property = "id",column = "id"),
-            @Result(property = "msgs",column = "username",
+            @Result(property = "message",column = "username",
                     javaType = List.class,
                     many = @Many(select = "com.example.debateteamos.mapper.MessageMapper.selectByName"))
     })
-    public List<UserInfo> fillMailBox(String token);
+    public List<UserInfo> fillMailBox(String token);*/
 }
