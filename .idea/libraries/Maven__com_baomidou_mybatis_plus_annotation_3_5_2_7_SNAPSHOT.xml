@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.baomidou:mybatis-plus-annotation:3.5.2.7-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/baomidou/mybatis-plus-annotation/3.5.2.7-SNAPSHOT/mybatis-plus-annotation-3.5.2.7-20221129.052155-1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/baomidou/mybatis-plus-annotation/3.5.2.7-SNAPSHOT/mybatis-plus-annotation-3.5.2.7-20221129.052155-1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/baomidou/mybatis-plus-annotation/3.5.2.7-SNAPSHOT/mybatis-plus-annotation-3.5.2.7-20221129.052155-1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
+
 public interface FileMapper extends BaseMapper<StoredFile> {
     @Select("select * from files")
     List<StoredFile> selectAll();
